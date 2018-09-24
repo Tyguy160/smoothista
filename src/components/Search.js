@@ -60,15 +60,27 @@ class Search extends Component {
     // Make a request for a user with a given ID
 
     const scrubbedTags = tags.map(tag => tag.text);
+    const querySets = this.state.querySets;
     // Store the query set in state
+    console.log("Scrubbed tags:");
     console.log(scrubbedTags);
-    console.log(this.state.querySets.map(set => set.indexOf(scrubbedTags)));
-    if (tags.length) {
+
+    // Check each query from the query list and compare elements
+    // from the scrubbed tags to make sure the new tags don't exist
+
+    //BUG: Currently it only saves state for individual items that aren't in the state
+    const duplicateQueries = querySets.map(query =>
+      scrubbedTags.map(tag => query.includes(tag)).some(item => item)
+    );
+    console.log(duplicateQueries);
+
+    // If there are no duplicate queries, add the new query into state
+    if (duplicateQueries.every(queries => !queries)) {
       this.setState(
         {
           querySets: [...this.state.querySets, scrubbedTags]
-        }
-        // () => console.log(this.state.querySets)
+        },
+        () => console.log(this.state.querySets)
       );
     }
 
