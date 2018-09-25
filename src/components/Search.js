@@ -83,10 +83,6 @@ class Search extends Component {
     // If there are no duplicate queries, add the new query into state
     // and make a new API call
     if (duplicateQueries.every(queries => !queries)) {
-      this.setState({
-        querySets: [...this.state.querySets, scrubbedTags]
-      });
-
       // Change reference to this
       let self = this;
       axios
@@ -109,6 +105,11 @@ class Search extends Component {
             },
             () => self.props.getSearchData(response)
           );
+
+          // Store the query in state, now that we know we received a response
+          this.setState({
+            querySets: [...this.state.querySets, scrubbedTags]
+          });
         })
         .catch(function(error) {
           // Handle error
