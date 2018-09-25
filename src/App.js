@@ -32,7 +32,7 @@ class App extends Component {
         <br />
         <Blender />
         <br />
-        <Recipe />
+        <Recipe searchData={this.state.searchData} />
       </div>
     );
   }
