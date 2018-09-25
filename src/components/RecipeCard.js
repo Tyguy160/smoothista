@@ -9,10 +9,7 @@ function RecipeCard() {
       <p className="serving">Serving size</p>
       <h3>Ingredients</h3>
       <ul className="ingredient-list">
-        <li>Ingredient</li>
-        <li>Ingredient</li>
-        <li>Ingredient</li>
-        <li>Ingredient</li>
+        {/* {this.props.ingredients.map(ingredient => `<li>${ingredient}</li>`)} */}
       </ul>
       <h3>Nutrition Facts</h3>
       <ul className="nutrition-facts">

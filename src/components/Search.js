@@ -71,17 +71,21 @@ class Search extends Component {
       query => JSON.stringify(query) === JSON.stringify(scrubbedTags)
     );
 
+    // Clean up user-inputed tags into query-able format
+    const userInput = tags.length ? `,${tags.map(tag => tag.text).join()}` : "";
+
+    // Clean up query for use as object key
+    const userInputKey = userInput
+      .substr(1, userInput.length)
+      .split(",")
+      .sort();
+
     // If there are no duplicate queries, add the new query into state
     // and make a new API call
     if (duplicateQueries.every(queries => !queries)) {
       this.setState({
         querySets: [...this.state.querySets, scrubbedTags]
       });
-
-      // Clean up user-inputed tags into query-able format
-      const userInput = tags.length
-        ? `,${tags.map(tag => tag.text).join()}`
-        : "";
 
       // Change reference to this
       let self = this;
@@ -93,21 +97,18 @@ class Search extends Component {
           // Handle success
           console.log(response);
 
-          // Clean up query for use as object key
-          const query = userInput
-            .substr(1, userInput.length)
-            .split(",")
-            .sort();
-
           console.log(query);
 
           // Store the API response into state with the query for cached access later
-          self.setState({
-            data: {
-              ...self.state.data,
-              [query]: response
-            }
-          });
+          self.setState(
+            {
+              data: {
+                ...self.state.data,
+                [userInputKey]: response
+              }
+            },
+            () => self.props.getSearchData(response)
+          );
         })
         .catch(function(error) {
           // Handle error
@@ -118,6 +119,7 @@ class Search extends Component {
         });
     } else {
       // If the tag request has already been made, pull it from the cache (state)
+      this.props.getSearchData(this.state.data[userInputKey]);
     }
   }
 

@@ -6,6 +6,20 @@ import Blender from "./components/Blender";
 import Recipe from "./components/RecipeCard";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchData: null
+    };
+  }
+
+  getSearchData = searchData => {
+    this.setState({
+      searchData: searchData
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -14,7 +28,7 @@ class App extends Component {
           <h1 className="App-title">Smoothista</h1>
         </header>
         <br />
-        <Search />
+        <Search getSearchData={this.getSearchData} />
         <br />
         <Blender />
         <br />
