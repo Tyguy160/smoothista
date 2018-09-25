@@ -32,9 +32,9 @@ class Search extends Component {
 
     this.state = {
       tags: [],
-      // Pull in fruits and veggies from external file
       suggestions: [...fruits, ...vegetables],
-      querySets: []
+      querySets: [],
+      data: {}
     };
 
     this.handleDelete = this.handleDelete.bind(this);
@@ -59,49 +59,66 @@ class Search extends Component {
     // https://api.edamam.com/search?app_id=1e4db5f4&app_key=9056db40ab369a2ae019b1855c0e3e3b&q=smoothie,spinach,pumpkin&to=1000
     // Make a request for a user with a given ID
 
-    const scrubbedTags = tags.map(tag => tag.text);
-    const querySets = this.state.querySets;
+    // Sort the tags alphabetically
+    const scrubbedTags = tags.map(tag => tag.text).sort();
+
     // Store the query set in state
-    console.log("Scrubbed tags:");
-    console.log(scrubbedTags);
+    const querySets = this.state.querySets;
 
     // Check each query from the query list and compare elements
     // from the scrubbed tags to make sure the new tags don't exist
-
-    //BUG: Currently it only saves state for individual items that aren't in the state
-    const duplicateQueries = querySets.map(query =>
-      scrubbedTags.map(tag => query.includes(tag)).some(item => item)
+    const duplicateQueries = querySets.map(
+      query => JSON.stringify(query) === JSON.stringify(scrubbedTags)
     );
-    console.log(duplicateQueries);
 
     // If there are no duplicate queries, add the new query into state
+    // and make a new API call
     if (duplicateQueries.every(queries => !queries)) {
-      this.setState(
-        {
-          querySets: [...this.state.querySets, scrubbedTags]
-        },
-        () => console.log(this.state.querySets)
-      );
+      this.setState({
+        querySets: [...this.state.querySets, scrubbedTags]
+      });
+
+      // Clean up user-inputed tags into query-able format
+      const userInput = tags.length
+        ? `,${tags.map(tag => tag.text).join()}`
+        : "";
+
+      // Change reference to this
+      let self = this;
+      axios
+        .get(
+          `${baseURL}?app_id=${appId}&app_key=${appKey}&q=${query}${userInput}&from=${from}&to=${to}`
+        )
+        .then(function(response) {
+          // Handle success
+          console.log(response);
+
+          // Clean up query for use as object key
+          const query = userInput
+            .substr(1, userInput.length)
+            .split(",")
+            .sort();
+
+          console.log(query);
+
+          // Store the API response into state with the query for cached access later
+          self.setState({
+            data: {
+              ...self.state.data,
+              [query]: response
+            }
+          });
+        })
+        .catch(function(error) {
+          // Handle error
+          console.log(error);
+        })
+        .then(function() {
+          // Always executed
+        });
+    } else {
+      // If the tag request has already been made, pull it from the cache (state)
     }
-
-    // Clean up user-inputed tags into query-able format
-    const userInput = tags.length ? `,${tags.map(tag => tag.text).join()}` : "";
-
-    // axios
-    //   .get(
-    //     `${baseURL}?app_id=${appId}&app_key=${appKey}&q=${query}${userInput}&from=${from}&to=${to}`
-    //   )
-    //   .then(function(response) {
-    //     // handle success
-    //     console.log(response);
-    //   })
-    //   .catch(function(error) {
-    //     // handle error
-    //     console.log(error);
-    //   })
-    //   .then(function() {
-    //     // always executed
-    //   });
   }
 
   render() {
