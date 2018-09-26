@@ -148,7 +148,12 @@ class Search extends Component {
           delimiters={delimiters}
           placeholder={placeholder}
         />
-        <button onClick={() => this.requestRecipeData(tags)}>Blend</button>
+        <button
+          className="blend-button"
+          onClick={() => this.requestRecipeData(tags)}
+        >
+          Blend
+        </button>
       </div>
     );
   }
