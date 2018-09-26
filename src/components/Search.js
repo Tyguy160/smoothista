@@ -34,7 +34,8 @@ class Search extends Component {
       tags: [],
       suggestions: [...fruits, ...vegetables],
       querySets: [],
-      data: {}
+      data: {},
+      loading: false
     };
 
     this.handleDelete = this.handleDelete.bind(this);
@@ -85,39 +86,50 @@ class Search extends Component {
     if (duplicateQueries.every(queries => !queries)) {
       // Change reference to this
       let self = this;
-      axios
-        .get(
-          `${baseURL}?app_id=${appId}&app_key=${appKey}&q=${query}${userInput}&from=${from}&to=${to}`
-        )
-        .then(function(response) {
-          // Handle success
-          console.log(response);
 
-          console.log(query);
+      // Change loading to 'true'
+      this.setState(
+        {
+          loading: true
+        },
+        () => {
+          // Make the request
+          axios
+            .get(
+              `${baseURL}?app_id=${appId}&app_key=${appKey}&q=${query}${userInput}&from=${from}&to=${to}`
+            )
+            .then(function(response) {
+              // Handle success
+              console.log(response);
 
-          // Store the API response into state with the query for cached access later
-          self.setState(
-            {
-              data: {
-                ...self.state.data,
-                [userInputKey]: response
-              }
-            },
-            () => self.props.getSearchData(response)
-          );
+              console.log(query);
 
-          // Store the query in state, now that we know we received a response
-          this.setState({
-            querySets: [...this.state.querySets, scrubbedTags]
-          });
-        })
-        .catch(function(error) {
-          // Handle error
-          console.log(error);
-        })
-        .then(function() {
-          // Always executed
-        });
+              // Store the API response into state with the query for cached access later
+              self.setState(
+                {
+                  data: {
+                    ...self.state.data,
+                    [userInputKey]: response
+                  }
+                },
+                () => self.props.getSearchData(response)
+              );
+
+              // Store the query in state, now that we know we received a response
+              self.setState({
+                querySets: [...self.state.querySets, scrubbedTags],
+                loading: false
+              });
+            })
+            .catch(function(error) {
+              // Handle error
+              console.log(error);
+            })
+            .then(function() {
+              // Always executed
+            });
+        }
+      );
     } else {
       // If the tag request has already been made, pull it from the cache (state)
       this.props.getSearchData(this.state.data[userInputKey]);
