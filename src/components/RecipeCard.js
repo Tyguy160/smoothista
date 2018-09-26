@@ -12,7 +12,10 @@ class RecipeCard extends Component {
   // Shift to next recipe number
   incrementRecipeNumber() {
     let recipeNumber = this.state.recipeNumber;
-    if (recipeNumber < this.props.searchData.data.count) {
+    // Only allow user to go up to 100 results or max results, whichever is lowest
+    const recipeCount = Math.min(this.props.searchData.data.hits.length, 99);
+    if (recipeNumber < recipeCount - 1) {
+      // if (recipeNumber < this.props.searchData.data.hits.length - 1) {
       recipeNumber += 1;
       this.setState({
         recipeNumber: recipeNumber
@@ -37,17 +40,23 @@ class RecipeCard extends Component {
 
     // If there is data, let's get started
     const recipeNumber = this.state.recipeNumber;
-    const recipeCount = data ? data.count : "";
-    const recipeData = data ? data.hits[recipeNumber].recipe : "";
-    const recipeTitle = data ? data.hits[recipeNumber].recipe.label : "";
-    const imgURL = data ? data.hits[recipeNumber].recipe.image : "";
-    const serving = data ? data.hits[recipeNumber].recipe.yield : "";
-    const recipeSourceName = data ? data.hits[recipeNumber].recipe.source : "";
-    const recipeSourceURL = data ? data.hits[recipeNumber].recipe.url : "";
-    const ingredients = data
-      ? data.hits[recipeNumber].recipe.ingredientLines
-      : "";
-    const calories = data ? data.hits[recipeNumber].recipe.calories : "";
+    const recipeCount = data ? data.hits.length : "";
+    const recipeData =
+      data && recipeCount ? data.hits[recipeNumber].recipe : "";
+    const recipeTitle =
+      data && recipeCount ? data.hits[recipeNumber].recipe.label : "";
+    const imgURL =
+      data && recipeCount ? data.hits[recipeNumber].recipe.image : "";
+    const serving =
+      data && recipeCount ? data.hits[recipeNumber].recipe.yield : "";
+    const recipeSourceName =
+      data && recipeCount ? data.hits[recipeNumber].recipe.source : "";
+    const recipeSourceURL =
+      data && recipeCount ? data.hits[recipeNumber].recipe.url : "";
+    const ingredients =
+      data && recipeCount ? data.hits[recipeNumber].recipe.ingredientLines : "";
+    const calories =
+      data && recipeCount ? data.hits[recipeNumber].recipe.calories : "";
 
     return (
       <div className="recipe-card">
@@ -58,7 +67,9 @@ class RecipeCard extends Component {
                 onClick={() => this.decrementRecipeNumber()}
               >{`<`}</button>
               <span>
-                Recipe #{recipeNumber + 1}/{recipeCount}
+                {/* Display only up to 100 results */}
+                Recipe #{recipeNumber + 1}/
+                {recipeCount > 99 ? `100` : recipeCount}
               </span>
               <button
                 onClick={() => this.incrementRecipeNumber()}
@@ -73,9 +84,12 @@ class RecipeCard extends Component {
             </div>
             <ul className="ingredients">
               <h3>Ingredients</h3>
-              {ingredients.map(ingredient => (
-                <li key={ingredient.toString()}>{ingredient}</li>
-              ))}
+              {/* If there are no ingredients, don't display anything */}
+              {ingredients
+                ? ingredients.map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
+                  ))
+                : ""}
             </ul>
             <div className="recipe-source">
               <span>
