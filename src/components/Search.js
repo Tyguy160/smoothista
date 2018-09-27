@@ -127,6 +127,8 @@ class Search extends Component {
             })
             .then(function() {
               // Always executed
+              // Scroll to recipe card after loading
+              // this.props.scrollToRecipe()
             });
         }
       );

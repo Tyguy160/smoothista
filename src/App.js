@@ -27,11 +27,8 @@ class App extends Component {
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <h1 className="App-title">Smoothista</h1>
         </header>
-        <br />
         <Search getSearchData={this.getSearchData} />
-        <br />
         <Blender />
-        <br />
         <Recipe searchData={this.state.searchData} />
       </div>
     );

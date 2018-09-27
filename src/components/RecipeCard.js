@@ -60,7 +60,7 @@ class RecipeCard extends Component {
 
     return (
       <div className="recipe-card">
-        {data ? (
+        {data && recipeCount ? (
           <div>
             <div className="recipe-control">
               <button
@@ -102,6 +102,8 @@ class RecipeCard extends Component {
               <div id="edamam-badge" data-color="white" />
             </div>
           </div>
+        ) : data ? (
+          "No recipes match!"
         ) : (
           ""
         )}
