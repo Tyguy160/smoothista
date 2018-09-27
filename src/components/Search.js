@@ -147,6 +147,7 @@ class Search extends Component {
           handleAddition={this.handleAddition}
           delimiters={delimiters}
           placeholder={placeholder}
+          autocomplete={true}
         />
         <button
           className="blend-button"

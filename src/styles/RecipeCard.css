@@ -1,6 +1,27 @@
 .recipe-card {
-  background-color: rgba(146, 131, 121, 0.75);
-  margin: 50px;
+  background-color: #eee;
+  /* background-color: rgba(146, 131, 121, 0.75); */
+  margin: 0px 25px 25px 25px;
   border-radius: 10px;
   box-shadow: 0px 5px 10px rgba(120, 120, 120, 1);
+}
+
+.recipe-control {
+  padding-top: 20px;
+}
+.recipe-image {
+  max-width: 100%;
+}
+
+.ingredients {
+  list-style-type: none;
+  padding-left: 0px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.ingredients > li {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: left;
 }
