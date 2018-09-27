@@ -3,7 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Search from "./components/Search";
 import Blender from "./components/Blender";
-import Recipe from "./components/RecipeCard";
+import RecipeCardContainer from "./components/RecipeCardContainer";
 
 class App extends Component {
   constructor(props) {
@@ -24,12 +24,11 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <h1 className="App-title">Smoothista</h1>
         </header>
         <Search getSearchData={this.getSearchData} />
         <Blender />
-        <Recipe searchData={this.state.searchData} />
+        <RecipeCardContainer searchData={this.state.searchData} />
       </div>
     );
   }

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "../styles/RecipeCard.css";
 
+import loadBadge from "../badge.js";
+
 class RecipeCard extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +34,10 @@ class RecipeCard extends Component {
         recipeNumber: recipeNumber
       });
     }
+  }
+
+  componentDidMount() {
+    loadBadge();
   }
 
   render() {
@@ -98,15 +104,15 @@ class RecipeCard extends Component {
                 </i>
               </span>
             </div>
-            <div className="attribution">
-              <div id="edamam-badge" data-color="white" />
-            </div>
           </div>
         ) : data ? (
           "No recipes match!"
         ) : (
           ""
         )}
+        <div className="attribution">
+          <div id="edamam-badge" data-color="transparent" />
+        </div>
       </div>
     );
   }
