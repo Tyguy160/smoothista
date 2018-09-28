@@ -22,12 +22,12 @@ function Badge() {
     default:
       tag = "transparent.png";
   }
-  (tag =
+  tag =
     '<a href="https://www.edamam.com" title="Powered by Edamam" target="_blank"><img alt="Powered by Edamam" src="' +
     url +
     tag +
-    '" height="40" width="200" /></a>'),
-    (attr.innerHTML = tag);
+    '" height="40" width="200" /></a>';
+  attr.innerHTML = tag;
 }
 
 export default Badge;
