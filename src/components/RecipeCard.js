@@ -81,22 +81,24 @@ class RecipeCard extends Component {
                 onClick={() => this.incrementRecipeNumber()}
               >{`>`}</button>
             </div>
-            <h2 className="recipe-title">{recipeTitle}</h2>
-            <img src={imgURL} className="recipe-image" />
-            <div className="nutrition-facts">
-              <h3>Nutrition Facts</h3>
-              <p className="serving">Serving size: {serving}</p>
-              <p>Calories per serving: {Math.round(calories)}</p>
+            <div className="grid-container">
+              <h2 className="recipe-title">{recipeTitle}</h2>
+              <div className="nutrition-facts">
+                <h3>Nutrition Facts</h3>
+                <p className="serving">Serving size: {serving}</p>
+                <p>Calories per serving: {Math.round(calories)}</p>
+              </div>
+              <img src={imgURL} className="recipe-image" />
+              <ul className="ingredients">
+                <h3>Ingredients</h3>
+                {/* If there are no ingredients, don't display anything */}
+                {ingredients
+                  ? ingredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                    ))
+                  : ""}
+              </ul>
             </div>
-            <ul className="ingredients">
-              <h3>Ingredients</h3>
-              {/* If there are no ingredients, don't display anything */}
-              {ingredients
-                ? ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
-                  ))
-                : ""}
-            </ul>
             <div className="recipe-source">
               <span>
                 <i>
