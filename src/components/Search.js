@@ -15,7 +15,7 @@ const KeyCodes = {
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 // Override default placehold for search box
-const placeholder = "Enter some fruits and veggies...";
+const placeholder = "Enter some ingredients";
 
 // API accesss
 const baseURL = "https://api.edamam.com/search";
