@@ -5,6 +5,7 @@ import Search from "./components/Search";
 import Blender from "./components/Blender";
 import RecipeCardContainer from "./components/RecipeCardContainer";
 
+import imgURL from "./smoothistaLogo.png";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +25,8 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Smoothista</h1>
+          {/* <h1 className="App-title">Smoothista</h1> */}
+          <img src={imgURL} className="App-logo" />
         </header>
         <Search getSearchData={this.getSearchData} />
         <Blender />
