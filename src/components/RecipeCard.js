@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "../styles/RecipeCard.css";
+import scrollToComponent from "react-scroll-to-component";
 
 import loadBadge from "../badge.js";
 
@@ -42,20 +43,25 @@ class RecipeCard extends Component {
     }
   }
 
-  componentDidMount() {
-    loadBadge();
+  scrollToRecipeCard() {
+    scrollToComponent(this.recipeCard.current, {
+      offset: 0,
+      align: "top",
+      duration: 500,
+      ease: "inOutSine"
+    });
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
+    // Load the Edamam badge
+    loadBadge();
+    this.scrollToRecipeCard();
+  }
+
+  componentWillReceiveProps() {
+    // Scroll to the recipe card after it's loaded
     if (this.props.loaded) {
-      console.log(this.recipeCard);
-      ReactDOM.findDOMNode(this.recipeCard.current).scrollIntoView({
-        behavior: "smooth",
-        inline: "start",
-        block: "start"
-      });
-    } else {
-      console.log("Nope");
+      this.scrollToRecipeCard();
     }
   }
 

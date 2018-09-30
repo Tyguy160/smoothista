@@ -36,7 +36,8 @@ class Search extends Component {
       suggestions: [...fruits, ...vegetables],
       querySets: [],
       data: {},
-      loading: false
+      loading: false,
+      axiosFailed: null
     };
 
     this.handleDelete = this.handleDelete.bind(this);
@@ -119,7 +120,8 @@ class Search extends Component {
               // Store the query in state, now that we know we received a response
               self.setState({
                 querySets: [...self.state.querySets, scrubbedTags],
-                loading: false
+                loading: false,
+                axiosFailed: false
               });
 
               // Set the recipe number to 0
@@ -128,13 +130,14 @@ class Search extends Component {
             .catch(function(error) {
               // Handle error
               console.log(error);
+              self.setState({
+                axiosFailed: true
+              });
             })
             .then(function() {
               // Always executed
-              // Scroll to recipe card after loading
-              // self.props.scrollToRecipe();
+              // Share the fact that loading is finished
               self.props.getLoadingStatus(true);
-              console.log("Loaded successfully");
             });
         }
       );
@@ -163,7 +166,10 @@ class Search extends Component {
         >
           Blend
         </button>
-        <Blender className={this.state.loading ? "loading" : ""} />
+        <Blender
+          axiosFailed={this.state.axiosFailed}
+          className={this.state.loading ? "loading" : ""}
+        />
       </div>
     );
   }

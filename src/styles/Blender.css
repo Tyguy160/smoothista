@@ -1,3 +1,51 @@
+.blender-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: "blender";
+}
+.blender {
+  max-height: 50vh;
+  justify-self: center;
+  align-self: center;
+  grid-area: blender;
+}
+
+.flames {
+  font-size: 10em;
+  margin-top: 0.7em;
+  z-index: -1;
+  justify-self: center;
+  align-self: center;
+  grid-area: blender;
+  margin-bottom: -10px;
+}
+
+.fire {
+  display: inline-block;
+
+  animation-name: onFire;
+  animation-iteration-count: infinite;
+  animation-duration: 0.5s;
+  animation-direction: alternate;
+  transform-origin: bottom center;
+}
+
+#fire-1 {
+  animation-delay: 0.5s;
+  margin-right: -5px;
+}
+
+#fire-2 {
+  animation-delay: 0.1s;
+  margin-right: 5px;
+}
+
+.error-message {
+  max-width: 70%;
+  text-align: center;
+  justify-self: center;
+}
+
 .loading {
   animation-name: blending;
   animation-iteration-count: infinite;
@@ -5,6 +53,15 @@
   animation-direction: linear;
 }
 @keyframes blending {
+  from {
+    transform: rotate(-1deg);
+  }
+  to {
+    transform: rotate(1deg);
+  }
+}
+
+@keyframes onFire {
   from {
     transform: rotate(-1deg);
   }
