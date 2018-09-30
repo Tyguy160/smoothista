@@ -11,13 +11,20 @@ class App extends Component {
     super(props);
 
     this.state = {
-      searchData: null
+      searchData: null,
+      loaded: false
     };
   }
 
   getSearchData = searchData => {
     this.setState({
       searchData: searchData
+    });
+  };
+
+  getLoadingStatus = status => {
+    this.setState({
+      loaded: status
     });
   };
 
@@ -33,8 +40,12 @@ class App extends Component {
         <Search
           getSearchData={this.getSearchData}
           resetRecipeNumber={this.resetRecipeNumber}
+          getLoadingStatus={this.getLoadingStatus}
         />
-        <RecipeCardContainer searchData={this.state.searchData} />
+        <RecipeCardContainer
+          searchData={this.state.searchData}
+          loaded={this.state.loaded}
+        />
       </div>
     );
   }

@@ -133,6 +133,8 @@ class Search extends Component {
               // Always executed
               // Scroll to recipe card after loading
               // self.props.scrollToRecipe();
+              self.props.getLoadingStatus(true);
+              console.log("Loaded successfully");
             });
         }
       );

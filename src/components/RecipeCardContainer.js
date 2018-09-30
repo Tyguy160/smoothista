@@ -9,7 +9,8 @@ function RecipeCardContainer(props) {
       {props.searchData ? (
         <RecipeCard
           searchData={props.searchData}
-          getRecipeCard={props.getRecipeCard}
+          // getRecipeCard={props.getRecipeCard}
+          loaded={props.loaded}
         />
       ) : (
         ""

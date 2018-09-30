@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import "../styles/RecipeCard.css";
 
 import loadBadge from "../badge.js";
@@ -45,6 +46,19 @@ class RecipeCard extends Component {
     loadBadge();
   }
 
+  componentDidUpdate() {
+    if (this.props.loaded) {
+      console.log(this.recipeCard);
+      ReactDOM.findDOMNode(this.recipeCard.current).scrollIntoView({
+        behavior: "smooth",
+        inline: "start",
+        block: "start"
+      });
+    } else {
+      console.log("Nope");
+    }
+  }
+
   render() {
     // If there is no data, don't worry be happy
     const data = this.props.searchData ? this.props.searchData.data : "";
@@ -70,7 +84,7 @@ class RecipeCard extends Component {
       data && recipeCount ? data.hits[recipeNumber].recipe.calories : "";
 
     return (
-      <div className="recipe-card" ref="recipeCard">
+      <div className="recipe-card" ref={this.recipeCard}>
         {data && recipeCount ? (
           <div>
             <div className="recipe-control">
