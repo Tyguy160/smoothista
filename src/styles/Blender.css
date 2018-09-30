@@ -1,0 +1,14 @@
+.loading {
+  animation-name: blending;
+  animation-iteration-count: infinite;
+  animation-duration: 0.15s;
+  animation-direction: linear;
+}
+@keyframes blending {
+  from {
+    transform: rotate(-1deg);
+  }
+  to {
+    transform: rotate(1deg);
+  }
+}

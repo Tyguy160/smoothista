@@ -68,14 +68,13 @@
 /* Still not sure what to do with the in-between-mobile-and-desktop size... */
 @media only screen and (min-width: 750px) {
   .recipe-card {
-    /* background-color: tomato; */
     width: 90%;
     display: inline-block;
   }
   .grid-container {
     display: grid;
     grid-template-columns: 0.5fr 0.5fr;
-    grid-template-areas: "title nutrition" "image ingredients";
+    grid-template-areas: "title title" "image nutrition" "image ingredients";
   }
   .recipe-image {
     grid-area: image;

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import logo from "./logo.svg";
 import "./App.css";
 import Search from "./components/Search";
-import Blender from "./components/Blender";
 import RecipeCardContainer from "./components/RecipeCardContainer";
 
 import imgURL from "./smoothistaLogo.png";
@@ -21,6 +21,8 @@ class App extends Component {
     });
   };
 
+  resetRecipeNumber() {}
+
   render() {
     return (
       <div className="App">
@@ -28,8 +30,10 @@ class App extends Component {
           {/* <h1 className="App-title">Smoothista</h1> */}
           <img src={imgURL} className="App-logo" />
         </header>
-        <Search getSearchData={this.getSearchData} />
-        <Blender />
+        <Search
+          getSearchData={this.getSearchData}
+          resetRecipeNumber={this.resetRecipeNumber}
+        />
         <RecipeCardContainer searchData={this.state.searchData} />
       </div>
     );

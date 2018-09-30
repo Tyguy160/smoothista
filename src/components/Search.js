@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { WithContext as ReactTags } from "react-tag-input";
 import axios from "axios";
 import { fruits, vegetables } from "../components/Ingredients";
+import Blender from "./Blender";
 import "../styles/Search.css";
 
 // Key codes used to finalize user input
@@ -120,6 +121,9 @@ class Search extends Component {
                 querySets: [...self.state.querySets, scrubbedTags],
                 loading: false
               });
+
+              // Set the recipe number to 0
+              self.props.resetRecipeNumber();
             })
             .catch(function(error) {
               // Handle error
@@ -128,7 +132,7 @@ class Search extends Component {
             .then(function() {
               // Always executed
               // Scroll to recipe card after loading
-              // this.props.scrollToRecipe()
+              // self.props.scrollToRecipe();
             });
         }
       );
@@ -157,6 +161,7 @@ class Search extends Component {
         >
           Blend
         </button>
+        <Blender className={this.state.loading ? "loading" : ""} />
       </div>
     );
   }

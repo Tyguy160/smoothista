@@ -27,6 +27,7 @@
 .ReactTags__tagInput {
   display: grid;
   grid-template-columns: 1fr;
+  justify-content: center;
 }
 .ReactTags__tagInputField {
   margin-top: 10px;
@@ -82,4 +83,10 @@ div.ReactTags__suggestions li mark {
 div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   background: #b7cfe0;
   cursor: pointer;
+}
+
+@media only screen and (min-width: 750px) {
+  .ReactTags__tagInput {
+    grid-template-columns: 50%;
+  }
 }

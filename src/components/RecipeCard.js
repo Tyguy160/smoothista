@@ -6,6 +6,10 @@ import loadBadge from "../badge.js";
 class RecipeCard extends Component {
   constructor(props) {
     super(props);
+
+    // Create a ref to the recipe card
+    this.recipeCard = React.createRef();
+
     this.state = {
       recipeNumber: 0
     };
@@ -14,6 +18,7 @@ class RecipeCard extends Component {
   // Shift to next recipe number
   incrementRecipeNumber() {
     let recipeNumber = this.state.recipeNumber;
+
     // Only allow user to go up to 100 results or max results, whichever is lowest
     const recipeCount = Math.min(this.props.searchData.data.hits.length, 99);
     if (recipeNumber < recipeCount - 1) {
@@ -65,7 +70,7 @@ class RecipeCard extends Component {
       data && recipeCount ? data.hits[recipeNumber].recipe.calories : "";
 
     return (
-      <div className="recipe-card">
+      <div className="recipe-card" ref="recipeCard">
         {data && recipeCount ? (
           <div>
             <div className="recipe-control">

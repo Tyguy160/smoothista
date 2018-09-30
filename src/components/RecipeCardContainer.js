@@ -6,7 +6,14 @@ import "../styles/RecipeCardContainer.css";
 function RecipeCardContainer(props) {
   return (
     <div className="container">
-      {props.searchData ? <RecipeCard searchData={props.searchData} /> : ""}
+      {props.searchData ? (
+        <RecipeCard
+          searchData={props.searchData}
+          getRecipeCard={props.getRecipeCard}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 }
